@@ -1,0 +1,16 @@
+
+
+
+
+苹果官方推荐ffmpeg脚本：
+
+#!/bin/sh
+
+BR=800k
+
+ffmpeg -i $1 -f mpegts -acodec libmp3lame -ar 48000 -ab 64k -s 320×240 -vcodec libx264 -b $BR -flags +loop -cmp +chroma -partitions +parti4x4+partp8x8+partb8x8 -subq 5 -trellis 1 -refs 1 -coder0 -me_range 16 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -bt 200k -maxrate $BR -bufsize $BR-rc_eq 'blurCplx^(1-qComp)' -qcomp 0.6 -qmin 10 -qmax 51 -qdiff 4 -level 30 -aspect 320:240 -g 30-async 2 sample_$BR_pre.ts
+
+segmenter sample_$BR_pre.ts 10 sample_$BR stream-$BR.m3u8 
+
+rm -f sample_$BR_pre.ts
+
