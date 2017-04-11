@@ -1,0 +1,41 @@
+http://www.thegeekstuff.com/2010/07/bash-string-manipulation/
+
+1. Identify String Length inside Bash Shell Script
+${#string}
+2. Extract a Substring from a Variable inside Bash Shell Script
+${string:position}  ${string:position:length}
+3. Shortest Substring Match
+Following syntax deletes the shortest match of $substring from front of $string
+${string#substring}
+Following syntax deletes the shortest match of $substring from back of $string
+${string%substring}
+4. Longest Substring Match
+Following syntax deletes the longest match of $substring from front of $string
+${string##substring}
+Following syntax deletes the longest match of $substring from back of $string
+${string%%substring}
+filename="bash.string.txt"
+
+echo "After deletion of longest match from front:" ${filename##*.}
+echo "After deletion of longest match from back:" ${filename%%.*}
+
+$ ./longest.sh
+After deletion of longest match from front: txt
+After deletion of longest match from back: bash
+5. Find and Replace String Values inside Bash Shell Script
+Replace only first match ${string/pattern/replacement}
+Replace all the matches  ${string//pattern/replacement}
+Replace beginning and end ${string/#pattern/replacement}
+Following syntax replaces with the replacement string, only when the pattern matches beginning of the $string.
+${string/%pattern/replacement}
+
+#! /bin/bash
+
+filename="/root/admin/monitoring/process.sh"
+
+echo "Replaced at the beginning:" ${filename/#\/root/\/tmp}
+echo "Replaced at the end": ${filename/%.*/.ksh}
+
+$ ./posmatch.sh
+Replaced at the beginning: /tmp/admin/monitoring/process.sh
+Replaced at the end: /root/admin/monitoring/process.ksh
